@@ -1,0 +1,14 @@
+{
+  "port": 3000,
+  "authentication": {
+    "secret": "longRandomStringOfStuff",
+    "refreshSecret": "mySecondLongRandomStringOfStuff"
+  },
+  "graphql": {
+    "endpoint": "/graphql",
+    "graphiql": "/sandbox"
+  },
+  "database": {
+    "url": "mongodb://localhost/r2m"
+  }
+}

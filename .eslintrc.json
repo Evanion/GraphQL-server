@@ -1,0 +1,25 @@
+{
+    "extends": [
+      "airbnb-base",
+      "prettier"
+    ],
+    "plugins": [
+      "graphql",
+      "prettier"
+    ],
+    "settings": {
+      "flowtype": {
+        "onlyFilesWithFlowAnnotations": false
+      },
+      "import/resolver": {
+        "node": {
+          "moduleDirectory": ["node_modules", "src"]
+        }
+      }
+    },
+    "rules": {
+      "graphql/template-strings": ["error", {
+        "env": "apollo",
+        }]
+    }
+}
