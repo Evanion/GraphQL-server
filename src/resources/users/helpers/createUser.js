@@ -1,5 +1,7 @@
 import Validate from 'utilities/validate'
 import hashPassword from './hashPassword'
+import util from 'util'
+
 const userObject = {
   email: String,
   password: String,
@@ -7,37 +9,25 @@ const userObject = {
 }
 
 export default async function createUser(data: userObject, model:Object)  {
-  if(!data.hasOwnProperty('email') ||
-     !data.hasOwnProperty('password') ||
-     !data.hasOwnProperty('username')) {
-    return {
-      ok: false,
-      errors: [{path: 'payload', message: 'INVALID_PAYLOAD'}]
-    }
-  }
-
-  if(!Validate(data.email, 'user.email')) {
-    return {
-      ok: false,
-      errors: [{path: 'email', message: 'INVALID_EMAIL'}]
-    }
-  }
-
-  if(!Validate(data.username, 'user.username')) {
-    return {
-      ok: false,
-      errors: [{path: 'username', message: 'INVALID_USERNAME'}]
-    }
-  }
-
-  if(!Validate(data.password, 'user.password')) {
-    return {
-      ok: false,
-      errors: [{path: 'password', message: 'INVALID_PASSWORD'}]
-    }
-  }
-
   try {
+    if(!data.hasOwnProperty('email') ||
+       !data.hasOwnProperty('password') ||
+       !data.hasOwnProperty('username')) {
+      throw {path: 'payload', message: 'INVALID_PAYLOAD'}
+    }
+
+    if(!Validate(data.email, 'user.email')) {
+      throw {path: 'email', message: 'INVALID_EMAIL'}
+    }
+
+    if(!Validate(data.username, 'user.username')) {
+      throw {path: 'username', message: 'INVALID_USERNAME'}
+    }
+
+    if(!Validate(data.password, 'user.password')) {
+      throw {path: 'password', message: 'INVALID_PASSWORD'}
+    }
+
     data.slug = data.username.toLowerCase();
     data.email = data.email.toLowerCase();
     data.password = await hashPassword(data.password);
@@ -47,10 +37,13 @@ export default async function createUser(data: userObject, model:Object)  {
       ok: true,
       user
     }
-  } catch (error) {
+  } catch(err) {
+    if(err.hasOwnProperty('code')) {
+      err = {path: 'create', message: 'UNABLE_TO_CREATE_USER'}
+    }
     return {
       ok: false,
-      errors: [{path: 'create', message: 'UNABLE_TO_CREATE_USER'}]
+      errors: [err]
     }
   }
 }
