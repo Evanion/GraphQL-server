@@ -9,6 +9,6 @@
     "graphiql": "/sandbox"
   },
   "database": {
-    "url": "mongodb://localhost/r2m"
+    "url": "mongodb://localhost:32778/test"
   }
 }

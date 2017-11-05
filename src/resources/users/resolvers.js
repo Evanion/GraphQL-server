@@ -1,7 +1,8 @@
 import util from 'util';
 import {tryLogin, validatePassword} from '../../authentication'
 import User from './model'
-import {createUser, hashPassword} from './helpers'
+import hashPassword from './helpers/hashPassword'
+import createUser from './helpers/createUser'
 
 export default {
   Query: {
