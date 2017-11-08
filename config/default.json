@@ -1,5 +1,7 @@
 {
-  "cors": "*",
+  "cors":{
+    "whitelist": "*"
+  },
   "port": 4000,
   "authentication": {
     "secret": "longRandomStringOfStuff",
