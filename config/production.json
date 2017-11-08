@@ -2,7 +2,7 @@
   "cors": {
     "whitelist": "CORS_WHITELIST"
   },
-  "port": 443,
+  "port": "PORT",
   "authentication": {
     "secret": "TOKEN_SECRET",
     "refreshSecret": "REFRESH_TOKEN_SECRET"
