@@ -1,6 +1,6 @@
 // @flow
 import jwt from 'jsonwebtoken'
-import {createTokens} from 'utilities/Authorization'
+import {createTokens} from './index'
 
 /**
  * @name refreshTokens

@@ -1,10 +1,17 @@
 {
-  "name": "server",
+  "name": "evanion-server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "GraphQL server for evanion.com",
+  "main": "src/index.js",
+  "engines": {
+    "node": "8.9.0"
+  },
   "scripts": {
-    "start": "NODE_PATH=src nodemon --exec babel-node ./src",
+    "clean": "rm -rf build && mkdir build",
+    "build": "yarn clean && yarn build:server",
+    "build:server": "babel -d ./build ./src -s",
+    "start": "yarn build && node ./build/index.js",
+    "dev": "nodemon --exec babel-node ./src",
     "precommit": "lint-staged",
     "test": "jest"
   },
@@ -12,10 +19,17 @@
   "author": "",
   "license": "ISC",
   "babel": {
+    "ignore": [
+      "**__mocks__/*.js",
+      "**__tests__/*.js"
+    ],
     "presets": [
       "env",
       "stage-3",
       "flow"
+    ],
+    "plugins": [
+      "transform-runtime"
     ]
   },
   "lint-staged": {
@@ -25,12 +39,17 @@
     ]
   },
   "jest": {
-    "moduleDirectories": ["node_modules", "src"],
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
     "collectCoverage": true
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.0.2",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-stage-3": "^6.24.1",

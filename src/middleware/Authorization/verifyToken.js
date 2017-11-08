@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import config from 'config'
 import mongoose from 'mongoose'
-import {refreshTokens} from 'utilities/Authorization'
+import {refreshTokens} from '../../utilities/Authorization'
 
 /**
  * @name verifyToken

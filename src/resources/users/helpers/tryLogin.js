@@ -1,5 +1,5 @@
 // @flow
-import {createTokens} from 'utilities/Authorization'
+import {createTokens} from '../../../utilities/Authorization'
 import validatePassword from './validatePassword'
 
 /**

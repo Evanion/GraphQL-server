@@ -4,7 +4,7 @@ import config from 'config'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
-import {verifyToken} from 'middleware/Authorization'
+import {verifyToken} from './middleware/Authorization'
 
 // Init database
 import './database'

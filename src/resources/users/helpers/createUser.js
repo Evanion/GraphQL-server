@@ -1,5 +1,5 @@
-import Validate from 'utilities/Validate'
-import FormatErrors from 'utilities/FormatErrors'
+import Validate from '../../../utilities/Validate'
+import FormatErrors from '../../../utilities/FormatErrors'
 import hashPassword from './hashPassword'
 
 const userObject = {

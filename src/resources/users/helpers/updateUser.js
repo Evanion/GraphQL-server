@@ -1,5 +1,5 @@
 // @flow
-import Validate from 'utilities/Validate'
+import Validate from '../../../utilities/Validate'
 import validatePassword from './validatePassword'
 import hashPassword from './hashPassword'
 import checkUsername from './checkUsername'
