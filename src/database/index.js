@@ -1,10 +1,11 @@
+// @flow
 import mongoose from 'mongoose'
-import config from 'config'
+import Config from '../utilities/Config'
 
-const url:String = config.get('database.url')
+const url: String = Config.get('database.url');
 
 mongoose.Promise = global.Promise;
 
-const connection:Object = mongoose.connection.openUri(url);
+const connection: Object = mongoose.connection.openUri(url);
 
 export default connection;

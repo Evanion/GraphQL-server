@@ -1,4 +1,5 @@
-import util from 'util'
+// @flow
+
 import {mergeTypes, mergeResolvers} from 'merge-graphql-schemas';
 
 import users from './users';
@@ -6,9 +7,9 @@ import general from './general';
 
 const resources = {general, users};
 
-let schemasArray = [];
-let resolversArray = [];
-let modelsObject = {};
+const schemasArray = [];
+const resolversArray = [];
+const modelsObject = {};
 
 for(let key in resources) {
   if(!resources.hasOwnProperty(key)) continue;
@@ -17,7 +18,7 @@ for(let key in resources) {
   if(resources[key].model) {
     modelsObject[resources[key].model.modelName] = resources[key].model
   }
-};
+}
 
 export const typeDefs = mergeTypes(schemasArray);
 export const resolvers = mergeResolvers(resolversArray);

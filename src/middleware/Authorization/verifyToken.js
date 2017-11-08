@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import config from 'config'
+import Config from '../../utilities/Config'
 import mongoose from 'mongoose'
 import {refreshTokens} from '../../utilities/Authorization'
 
@@ -12,8 +12,8 @@ import {refreshTokens} from '../../utilities/Authorization'
  * @param next  {Function}  Express middleware done function
  */
 export default async function verifyToken(req, res, next){
-  const SECRET = config.get('authentication.secret');
-  const REFRESHSECRET = config.get('authentication.refreshSecret');
+  const SECRET = Config.get('authentication.secret');
+  const REFRESHSECRET = Config.get('authentication.refreshSecret');
   const rawToken = req.headers.authorization;
   let token;
   let keyword;

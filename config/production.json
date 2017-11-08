@@ -1,13 +1,11 @@
 {
-  "cors": "*",
-  "port": 4000,
-  "authentication": {
-    "secret": "longRandomStringOfStuff",
-    "refreshSecret": "mySecondLongRandomStringOfStuff"
+  "cors": {
+    "whitelist": "CORS_WHITELIST"
   },
-  "graphql": {
-    "endpoint": "/graphql",
-    "graphiql": "/sandbox"
+  "port": 443,
+  "authentication": {
+    "secret": "TOKEN_SECRET",
+    "refreshSecret": "REFRESH_TOKEN_SECRET"
   },
   "database": {
     "url": "MONGODB_URI"
