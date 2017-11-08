@@ -21,7 +21,7 @@ const app = express();
 
 const corsOptions = {
   origin: (origin, callback) => {
-    const whitelist = String(Config.get('cors')).split(' ');
+    const whitelist = String(Config.get('cors.whitelist')).split(' ');
     if (whitelist.indexOf(origin) !== -1 || whitelist.indexOf('*') !== -1) {
       callback(null, true)
     } else {
