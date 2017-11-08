@@ -1,6 +1,6 @@
-import Validate from 'utilities/validate'
+import Validate from 'utilities/Validate'
+import FormatErrors from 'utilities/FormatErrors'
 import hashPassword from './hashPassword'
-import util from 'util'
 
 const userObject = {
   email: String,
@@ -31,15 +31,18 @@ export default async function createUser(data: userObject, model:Object)  {
     data.slug = data.username.toLowerCase();
     data.email = data.email.toLowerCase();
     data.password = await hashPassword(data.password);
-
     const user =  await model.create(data);
     return {
       ok: true,
       user
     }
   } catch(err) {
-    if(err.hasOwnProperty('code')) {
-      err = {path: 'create', message: 'UNABLE_TO_CREATE_USER'}
+    if(err.errors || err.code) {
+      let errors = FormatErrors(err)
+      return {
+        ok: false,
+        errors
+      }
     }
     return {
       ok: false,

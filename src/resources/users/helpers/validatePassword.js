@@ -1,3 +1,4 @@
+// @flow
 import bcrypt from 'bcrypt'
 /**
  * @name validatePassword
@@ -6,6 +7,6 @@ import bcrypt from 'bcrypt'
  * @param storedPassword  {String} The stored password we want to compare against
  * @return {Promise<Boolean>} returns a response object
  */
-export default async function validatePassword (password:String, storedPassword:String) {
-  return await bcrypt.compare(password, storedPassword);
+export default async function validatePassword (password: String, storedPassword: String) {
+  return bcrypt.compare(password, storedPassword);
 }

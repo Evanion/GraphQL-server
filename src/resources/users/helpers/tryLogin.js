@@ -1,6 +1,7 @@
-//@flow
+// @flow
+import {createTokens} from 'utilities/Authorization'
 import validatePassword from './validatePassword'
-import createTokens from './createTokens'
+
 /**
  * @name tryLogin
  * @description Attempts to authenticate the user
@@ -11,12 +12,19 @@ import createTokens from './createTokens'
  * @param secret2   {String} THe secret string used to sign refresh tokens
  * @return {Promise<Object>} returns a response object
  */
-export default async function tryLogin(email:String, password:String, db:Object, secret:String, secret2:String) {
-  const user = await db.findOne({email})
+export default async function tryLogin(email: String, password: String, db: Object, secret: String, secret2: String) {
+  const user = await db.findOne({email});
   if(!user) {
     return {
       ok: false,
       errors: [{path: 'login', message: 'INVALID_LOGIN'}]
+    }
+  }
+
+  if(user.status !== 'active') {
+    return {
+      ok: false,
+      errors: [{path: 'login', message: `USER_IS_${user.status.toUpperCase()}`}]
     }
   }
 

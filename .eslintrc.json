@@ -1,11 +1,12 @@
 {
     "extends": [
       "airbnb-base",
-      "prettier"
+      "prettier",
+      "plugin:flowtype/recommended"
     ],
     "plugins": [
-      "graphql",
-      "prettier"
+      "prettier",
+      "flowtype"
     ],
     "settings": {
       "flowtype": {
@@ -16,10 +17,5 @@
           "moduleDirectory": ["node_modules", "src"]
         }
       }
-    },
-    "rules": {
-      "graphql/template-strings": ["error", {
-        "env": "apollo",
-        }]
     }
 }

@@ -20,7 +20,7 @@ export default {
   }
 };
 
-async function allUsers(parent: Object, args: Object, context: Object) {
+async function allUsers(parent: Object, args: Object, context:Object) {
   return await User.find(args)
 }
 
@@ -28,7 +28,7 @@ async function getUser(parent: Object, args: Object, context:Object) {
   return await User.findById(args.id)
 }
 
-async function usernameTaken(parent: Object, args: Object, context) {
+async function usernameTaken(parent: Object, args: Object, context:Object) {
   return await checkUsername(args.username, User);
 }
 

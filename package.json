@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_PATH=src nodemon --exec babel-node ./src",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -23,8 +24,13 @@
       "git add"
     ]
   },
+  "jest": {
+    "moduleDirectories": ["node_modules", "src"],
+    "collectCoverage": true
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.0.2",
     "babel-preset-env": "^1.6.0",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-stage-3": "^6.24.1",
@@ -32,12 +38,14 @@
     "eslint-config-airbnb": "^16.0.0",
     "eslint-config-airbnb-base": "^12.0.2",
     "eslint-config-prettier": "^2.6.0",
+    "eslint-plugin-flowtype": "^2.39.1",
     "eslint-plugin-graphql": "^1.4.0-1",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-prettier": "^2.3.1",
     "eslint-plugin-react": "^7.4.0",
     "husky": "^0.14.3",
+    "jest": "^21.2.1",
     "lint-staged": "^4.2.3",
     "nodemon": "^1.12.1",
     "prettier": "1.7.4"
@@ -47,6 +55,7 @@
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "config": "^1.26.2",
+    "cors": "^2.8.4",
     "express": "^4.16.1",
     "graphql": "^0.11.7",
     "graphql-tools": "^2.2.1",

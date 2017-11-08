@@ -1,29 +1,37 @@
 //@flow
-import util from 'util'
-import express from 'express';
-import config from 'config';
-import bodyParser from 'body-parser';
-import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
-import { makeExecutableSchema } from 'graphql-tools';
+import express from 'express'
+import config from 'config'
+import bodyParser from 'body-parser'
+import cors from 'cors'
+import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
+import {verifyToken} from 'middleware/Authorization'
 
-import db from './database'
+// Init database
+import './database'
+
 import schema from './schema'
 
-const endpointURL: String = config.get('graphql.endpoint'),
-      graphiql: String = config.get('graphql.graphiql'),
-      port: Number = config.get('port'),
-      secret: String = config.get('authentication.secret'),
-      refreshSecret: String = config.get('authentication.refreshSecret'),
-      app: Object = express();
+const endpointURL = config.get('graphql.endpoint');
+const graphiql = config.get('graphql.graphiql');
+const port = config.get('port');
+const secret = config.get('authentication.secret');
+const refreshSecret = config.get('authentication.refreshSecret');
+const app = express();
 app
-  .use(endpointURL, bodyParser.json(), graphqlExpress({
+  .use(cors(config.get('cors')))
+  .use((req, res, next)=> {
+    res.removeHeader("X-Powered-By");
+    next();
+  })
+  .use(verifyToken)
+  .use(endpointURL, bodyParser.json(), graphqlExpress((req)=>({
     context: {
-      db,
+      user: req.user,
       secret,
       refreshSecret
     },
     schema
-  }))
+  })))
   .use(graphiql, graphiqlExpress({endpointURL}))
   .listen(port, () => {
     console.log('Server started');
