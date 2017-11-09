@@ -1,7 +1,7 @@
 // @flow
 import express from 'express'
-
 import bodyParser from 'body-parser'
+import helmet from 'helmet'
 import cors from 'cors'
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
 import Config from './utilities/Config';
@@ -22,7 +22,7 @@ const app = express();
 
 const corsOptionsDelegate = (req, callback) => {
   let corsOptions;
-  if (corsWhitelist.indexOf(req.header('Origin')) !== -1) {
+  if (corsWhitelist.indexOf(req.header('Origin')) !== -1 || corsWhitelist.indexOf('*') !== -1) {
     corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
   }else{
     corsOptions = { origin: false } // disable CORS for this request
@@ -31,12 +31,9 @@ const corsOptionsDelegate = (req, callback) => {
 };
 
 app
+    .use(helmet())
   .options('*', cors(corsOptionsDelegate))
   .use(cors(corsOptionsDelegate))
-  .use((req, res, next)=> {
-    res.removeHeader("X-Powered-By");
-    next();
-  })
   .use(verifyToken)
   .use(endpointURL, bodyParser.json(), graphqlExpress((req)=>({
     context: {
