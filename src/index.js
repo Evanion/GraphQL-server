@@ -1,16 +1,17 @@
 // @flow
-import express from 'express'
-import bodyParser from 'body-parser'
-import helmet from 'helmet'
-import cors from 'cors'
-import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
+/* eslint no-console: 0 */
+import 'babel-polyfill';
+import express from 'express';
+import bodyParser from 'body-parser';
+import helmet from 'helmet';
+import cors from 'cors';
+import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import Config from './utilities/Config';
-import {verifyToken} from './middleware/Authorization'
+import { verifyToken } from './middleware/Authorization';
 
 // Init database
-import './database'
-
-import schema from './schema'
+import './database';
+import schema from './schema';
 
 const endpointURL = Config.get('graphql.endpoint');
 const graphiql = Config.get('graphql.graphiql');
@@ -23,28 +24,33 @@ const app = express();
 const corsOptionsDelegate = (req, callback) => {
   let corsOptions;
   if (corsWhitelist.indexOf(req.header('Origin')) !== -1 || corsWhitelist.indexOf('*') !== -1) {
-    corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
-  }else{
-    corsOptions = { origin: false } // disable CORS for this request
+    corsOptions = { origin: true }; // reflect (enable) the requested origin in the CORS response
+  } else {
+    corsOptions = { origin: false }; // disable CORS for this request
   }
-  callback(null, corsOptions) // callback expects two parameters: error and options
+  callback(null, corsOptions); // callback expects two parameters: error and options
 };
 
 app
-    .use(helmet())
+  .use(helmet())
   .options('*', cors(corsOptionsDelegate))
   .use(cors(corsOptionsDelegate))
   .use(verifyToken)
-  .use(endpointURL, bodyParser.json(), graphqlExpress((req)=>({
-    context: {
-      user: req.user,
-      secret,
-      refreshSecret
-    },
-    schema
-  })))
-  .use(graphiql, graphiqlExpress({endpointURL}))
-  .listen(port, () => {
-    console.log('Server started');
-    console.log('Listening to port', port);
-  });
+  .use(
+    endpointURL,
+    bodyParser.json(),
+    graphqlExpress(req => ({
+      context: {
+        user: req.user,
+        secret,
+        refreshSecret
+      },
+      schema
+    }))
+  )
+  .use(graphiql, graphiqlExpress({ endpointURL }));
+
+app.listen(port, () => {
+  console.log('Server started');
+  console.log('Listening to port', port);
+});

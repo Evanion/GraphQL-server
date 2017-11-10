@@ -1,5 +1,5 @@
 // @flow
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 
 /**
  * @name createTokens
@@ -9,20 +9,16 @@ import jwt from 'jsonwebtoken'
  * @param secret2 {String} The secret string used to sign refresh tokens
  * @return {Array} returns an array containing the token and refreshToken
  */
-export default async function createTokens(user: Object, secret: String, secret2: String) {
+export default (async function createTokens(user: Object, secret: String, secret2: String) {
   const payload = {
     user: {
-      id:user.id,
+      id: user.id,
       roles: user.roles
     }
   };
 
-  const createToken = jwt.sign(payload,secret, {expiresIn: '3h'});
+  const createToken = jwt.sign(payload, secret, { expiresIn: '3h' });
   const refreshTokenSecret = user.password + secret2;
-  const createRefreshToken = jwt.sign(
-    {user: user.id},
-    refreshTokenSecret,
-    {expiresIn: '6h'}
-  );
+  const createRefreshToken = jwt.sign({ user: user.id }, refreshTokenSecret, { expiresIn: '6h' });
   return [createToken, createRefreshToken];
-}
+});

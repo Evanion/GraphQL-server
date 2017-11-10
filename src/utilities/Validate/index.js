@@ -8,7 +8,7 @@ import patterns from './patterns';
  * @returns {Boolean} Returns true if the value matches
  */
 export default function Validate(value: String, pattern: String) {
-  const patternRegExp: RegExp = pattern.split('.').reduce((o,i)=>o[i], patterns);
+  const patternRegExp: RegExp = pattern.split('.').reduce((o, i) => o[i], patterns);
   const validate = new RegExp(patternRegExp);
   return validate.test(value);
 }

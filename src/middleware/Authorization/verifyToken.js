@@ -1,7 +1,7 @@
-import jwt from 'jsonwebtoken'
-import Config from '../../utilities/Config'
-import mongoose from 'mongoose'
-import {refreshTokens} from '../../utilities/Authorization'
+import jwt from 'jsonwebtoken';
+import mongoose from 'mongoose';
+import Config from '../../utilities/Config';
+import { refreshTokens } from '../../utilities/Authorization';
 
 /**
  * @name verifyToken
@@ -11,34 +11,38 @@ import {refreshTokens} from '../../utilities/Authorization'
  * @param res   {Object}    Express response object
  * @param next  {Function}  Express middleware done function
  */
-export default async function verifyToken(req, res, next){
+export default (async function verifyToken(req, res, next) {
   const SECRET = Config.get('authentication.secret');
   const REFRESHSECRET = Config.get('authentication.refreshSecret');
   const rawToken = req.headers.authorization;
   let token;
   let keyword;
 
-  if(rawToken) {
+  if (rawToken) {
     try {
       [keyword, token] = rawToken.split(' ');
       const payload = jwt.verify(token, SECRET);
-      req.user = payload.user
-    } catch(error) {
-
+      req.user = payload.user;
+    } catch (error) {
       // if the first keyword isn't 'Bearer' we don't want to create new tokens
-      if(keyword !== 'Bearer') {
+      if (keyword !== 'Bearer') {
         next();
-        return
+        return;
       }
       // if the tokens signature doesn't validate it's an fraudulent token
-      if(error.name !== 'TokenExpiredError') {
+      if (error.name !== 'TokenExpiredError') {
         next();
-        return
+        return;
       }
       // else we try and refresh the token
       const refreshToken = req.headers['x-refresh-token'];
-      const newTokens = await refreshTokens(refreshToken, mongoose.models.User, SECRET, REFRESHSECRET);
-      if(newTokens.token && newTokens.refreshToken) {
+      const newTokens = await refreshTokens(
+        refreshToken,
+        mongoose.models.User,
+        SECRET,
+        REFRESHSECRET
+      );
+      if (newTokens.token && newTokens.refreshToken) {
         res.set('Access-Control-Expose-Headers', 'Authorization, x-refresh-token');
         res.set('Authorization', `Bearer ${newTokens.token}`);
         res.set('x-refresh-token', `${newTokens.refreshToken}`);
@@ -46,5 +50,5 @@ export default async function verifyToken(req, res, next){
       req.user = newTokens.user;
     }
   }
-  next()
-}
+  next();
+});

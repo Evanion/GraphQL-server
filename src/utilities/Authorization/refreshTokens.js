@@ -1,6 +1,6 @@
 // @flow
-import jwt from 'jsonwebtoken'
-import {createTokens} from './index'
+import jwt from 'jsonwebtoken';
+import { createTokens } from './index';
 
 /**
  * @name refreshTokens
@@ -11,34 +11,43 @@ import {createTokens} from './index'
  * @param REFRESHSECRET {String}  Application secret string used to sign refreshTokens
  * @return {Promise.<*>}
  */
-export default async function refreshTokens(refreshToken: String, model: Object, SECRET: String, REFRESHSECRET: String) {
+export default (async function refreshTokens(
+  refreshToken: String,
+  model: Object,
+  SECRET: String,
+  REFRESHSECRET: String
+) {
   let id = null;
   try {
-    const {user} = jwt.decode(refreshToken);
-    id = user
-  } catch(error) {
-    return {}
+    const { user } = jwt.decode(refreshToken);
+    id = user;
+  } catch (error) {
+    return {};
   }
-  if(!id) {
-    return {}
+  if (!id) {
+    return {};
   }
 
   const dbUser = await model.findById(id);
 
-  if(!dbUser){
-    return {}
+  if (!dbUser) {
+    return {};
   }
 
   try {
-    jwt.verify(refreshToken, dbUser.password + REFRESHSECRET)
-  } catch (err){
-    return {}
+    jwt.verify(refreshToken, dbUser.password + REFRESHSECRET);
+  } catch (err) {
+    return {};
   }
 
-  const [newToken, newRefreshToken] = await createTokens(dbUser, SECRET, dbUser.password + REFRESHSECRET);
+  const [newToken, newRefreshToken] = await createTokens(
+    dbUser,
+    SECRET,
+    dbUser.password + REFRESHSECRET
+  );
   return {
     token: newToken,
     refreshToken: newRefreshToken,
     user: dbUser
-  }
-}
+  };
+});

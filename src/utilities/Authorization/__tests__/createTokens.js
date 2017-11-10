@@ -3,7 +3,7 @@
  */
 
 import jwt from 'jsonwebtoken';
-import createTokens from '../createTokens'
+import createTokens from '../createTokens';
 
 jest.genMockFromModule('jsonwebtoken');
 
@@ -21,7 +21,6 @@ describe('createTokens', () => {
     return createTokens(mockUser, mockSecret, mockSecret2).then(result => {
       expect(Array.isArray(result)).toBe(true);
       expect(result.length).toBe(2);
-    })
-  })
+    });
+  });
 });
-

@@ -1,21 +1,36 @@
 {
-    "extends": [
-      "airbnb-base",
-      "prettier",
-      "plugin:flowtype/recommended"
-    ],
-    "plugins": [
-      "prettier",
-      "flowtype"
-    ],
-    "settings": {
-      "flowtype": {
-        "onlyFilesWithFlowAnnotations": false
-      },
-      "import/resolver": {
-        "node": {
-          "moduleDirectory": ["node_modules"]
-        }
+  "env": {
+    "jest/globals": true
+  },
+  "extends": [
+    "airbnb-base",
+    "plugin:flowtype/recommended",
+    "prettier"
+  ],
+  "plugins": [
+    "flowtype",
+    "import-order-autofix",
+    "jest",
+    "prettier"
+  ],
+  "rules": {
+    "import-order-autofix/order": 1,
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jest/prefer-to-have-length": "warn",
+    "jest/valid-expect": "error",
+    "no-throw-literal": 0,
+    "prettier/prettier": "error"
+  },
+  "settings": {
+    "flowtype": {
+      "onlyFilesWithFlowAnnotations": false
+    },
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": ["node_modules"]
       }
     }
+  }
 }
