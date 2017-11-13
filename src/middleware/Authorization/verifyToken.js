@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
-import Config from '../../utilities/Config';
+import Config from '@evanion/config-extended';
 import { refreshTokens } from '../../utilities/Authorization';
 
 /**

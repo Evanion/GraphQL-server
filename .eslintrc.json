@@ -1,18 +1,16 @@
 {
   "env": {
+    "node": true,
     "jest/globals": true
   },
-  "extends": [
-    "airbnb-base",
-    "plugin:flowtype/recommended",
-    "prettier"
-  ],
-  "plugins": [
-    "flowtype",
-    "import-order-autofix",
-    "jest",
-    "prettier"
-  ],
+  "extends": ["airbnb-base", "plugin:flowtype/recommended", "prettier"],
+  "plugins": ["flowtype", "import-order-autofix", "jest", "prettier"],
+  "parserOptions": {
+    "ecmaVersion": 2017,
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
+  },
   "rules": {
     "import-order-autofix/order": 1,
     "jest/no-disabled-tests": "warn",

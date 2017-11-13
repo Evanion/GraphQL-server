@@ -1,5 +1,6 @@
 // @flow
 import jwt from 'jsonwebtoken';
+import Config from '@evanion/config-extended';
 
 /**
  * @name createTokens
@@ -17,8 +18,13 @@ export default (async function createTokens(user: Object, secret: String, secret
     }
   };
 
-  const createToken = jwt.sign(payload, secret, { expiresIn: '3h' });
+  const tokenTTL = Config.get('authentication.tokenTTL');
+  const refreshTTL = Config.get('authentication.refreshTTL');
+
+  const createToken = jwt.sign(payload, secret, { expiresIn: tokenTTL });
   const refreshTokenSecret = user.password + secret2;
-  const createRefreshToken = jwt.sign({ user: user.id }, refreshTokenSecret, { expiresIn: '6h' });
+  const createRefreshToken = jwt.sign({ user: user.id }, refreshTokenSecret, {
+    expiresIn: refreshTTL
+  });
   return [createToken, createRefreshToken];
 });

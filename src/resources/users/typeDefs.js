@@ -43,7 +43,7 @@ export default `
   type Mutation {
     # Allows you to create a new user
     register(email: String!, password: String!, username: String!): RegisterResponse!
-    updateUser(id: String!, email: String, password: String, newPassword: String, username: String): UpdateUserResponse!
+    updateUser(id: String, email: String, password: String, newPassword: String, username: String): UpdateUserResponse!
     login(email: String!, password: String!): LoginResponse!
   }
 `;

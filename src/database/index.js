@@ -1,6 +1,6 @@
 // @flow
-import mongoose from 'mongoose'
-import Config from '../utilities/Config'
+import mongoose from 'mongoose';
+import Config from '@evanion/config-extended';
 
 const url: String = Config.get('database.url');
 
