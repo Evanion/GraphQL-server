@@ -1,15 +1,16 @@
 {
-  "cors":{
+  "cors": {
     "whitelist": "*"
   },
   "port": 4000,
   "authentication": {
     "secret": "longRandomStringOfStuff",
-    "refreshSecret": "mySecondLongRandomStringOfStuff"
+    "refreshSecret": "mySecondLongRandomStringOfStuff",
+    "tokenTTL": "1h",
+    "refreshTTL": "1d"
   },
   "graphql": {
-    "endpoint": "/graphql",
-    "graphiql": "/sandbox"
+    "endpoint": "/graphql"
   },
   "database": {
     "url": "mongodb://localhost:32778/test"
